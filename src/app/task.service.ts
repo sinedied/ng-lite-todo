@@ -1,10 +1,13 @@
 import { Task } from './task';
+import { environment } from '../environments/environment';
 
-let tasks: Task[] = [
-  { id: 0, description: 'Learn Angular', completed: true },
-  { id: 1, description: 'Learn TypeScript', completed: false },
-  { id: 2, description: 'Learn Node.js', completed: false },
-];
+const userId = localStorage.getItem('userId');
+if (!userId) {
+  localStorage.setItem('userId', Math.random().toString(36).substring(2));
+}
+const apiUrl = `${environment.api}/users/${userId}`;
+
+let tasks: Task[] | undefined;
 
 export enum TaskFilter {
   All = 'all',
@@ -12,7 +15,12 @@ export enum TaskFilter {
   Completed = 'completed'
 }
 
-export function getTasks(filter: TaskFilter = TaskFilter.All): Task[] {
+export async function getTasks(filter: TaskFilter = TaskFilter.All): Promise<Task[]> {
+  if (tasks === undefined) {
+    const response = await fetch(`${apiUrl}/tasks/`);
+    tasks = await response.json() as Task[];
+  }
+
   switch (filter) {
     case TaskFilter.Active:
       return tasks.filter(task => !task.completed);
@@ -23,11 +31,19 @@ export function getTasks(filter: TaskFilter = TaskFilter.All): Task[] {
   }
 }
 
-export function addTask(description: string) {
-  const task = { id: tasks.length, description, completed: false };
-  tasks.push(task);
+export async function addTask(description: string) {
+  const response = await fetch(`${apiUrl}/tasks/`, {
+    method: 'POST',
+    body: JSON.stringify({ description })
+  });
+  const task = await response.json() as Task;
+  tasks?.push(task);
 }
 
-export function setTaskCompleted(task: Task, completed: boolean) {
+export async function setTaskCompleted(task: Task, completed: boolean) {
   task.completed = completed;
+  await fetch(`${apiUrl}/tasks/${task.id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ completed })
+  });
 }

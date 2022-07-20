@@ -80,18 +80,18 @@ export class AppComponent {
     this.updateRoute();
   }
 
-  updateTasks() {
-    this.tasks = getTasks(this.currentFilter);
+  async updateTasks() {
+    this.tasks = await getTasks(this.currentFilter);
   }
 
-  addTask(description: string) {
-    addTask(description);
-    this.updateTasks();
+  async addTask(description: string) {
+    await addTask(description);
+    await this.updateTasks();
   }
 
-  toggleTaskCompleted(task: Task) {
-    setTaskCompleted(task, !task.completed);
-    this.updateTasks();
+  async toggleTaskCompleted(task: Task) {
+    await setTaskCompleted(task, !task.completed);
+    await this.updateTasks();
   }
 
   filterTasks(filter: TaskFilter) {

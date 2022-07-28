@@ -36,6 +36,7 @@ swa deploy \
   --client-id "${client_id}" \
   --client-secret "${client_secret}" \
   --env "production" \
+  --no-use-keychain \
   --verbose
 
 echo "Deployment complete for environment '${environment}'."

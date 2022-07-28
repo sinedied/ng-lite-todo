@@ -2,7 +2,9 @@
 
 > Todo-list app built with (minimal) Angular.
 
-See this [dev.to article](WIP) to see all details about how this app was created.
+An upcoming article detailing all the steps to build this app is coming soon!
+
+<!-- See this [dev.to article](WIP) to see all details about how this app was created. -->
 
 ## Tasks
 

@@ -8,7 +8,7 @@ An upcoming article detailing all the steps to build this app is coming soon!
 
 ## Tasks
 
-This starter is used the same way as any Angular project, ie using the included NPM scripts or the Angular CLI directly:
+This project works the same way as any Angular project, by using either the included NPM scripts or the Angular CLI directly:
 
 - `npm start`: run dev server at `http://localhost:4200/`
 - `npm run build`: build the project in the `dist/` directory.

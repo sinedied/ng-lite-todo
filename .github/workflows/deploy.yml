@@ -10,7 +10,7 @@ jobs:
   build_and_deploy:
     if: github.ref == 'refs/heads/deploy-azure'
     runs-on: ubuntu-latest
-    container: bluebuilder/azure:latest@2268407
+    container: bluebuilder/azure:2268407
     steps:
       - name: Checkout
         uses: actions/checkout@v3

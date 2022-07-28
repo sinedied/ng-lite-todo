@@ -20,9 +20,11 @@ import { TaskFilter } from './task.service';
       justify-content: space-between;
       align-items: center;
     }
+
     label {
       color: #667;
     }
+
     select {
       border-radius: 10px;
       padding: 5px;

@@ -1,0 +1,28 @@
+name: Deploy on Azure
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - deploy-azure
+
+jobs:
+  build_and_deploy:
+    if: github.ref == 'refs/heads/deploy-azure'
+    runs-on: ubuntu-latest
+    container: bluebuilder/azure:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Build app
+        run: npm run build
+      - name: Login
+        run: cd .azure && ./setup.sh --ci-login
+        env:
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Create infrastructure
+        run: cd .azure && ./infra.sh create
+      - name: Deploy project
+        run: cd .azure && ./deploy.sh

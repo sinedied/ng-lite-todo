@@ -29,8 +29,8 @@ resource staticWebApp 'Microsoft.Web/staticSites@2021-03-01' = {
   location: location
   tags: commonTags
   sku: {
-    name: 'Standard'
-    tier: 'Standard'
+    name: 'Free'
+    tier: 'Free'
   }
   properties: {
   }

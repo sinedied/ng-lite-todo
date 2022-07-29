@@ -21,22 +21,24 @@ source ".${environment}.env"
 
 echo "Deploying environment '${environment}'..."
 
-client_id="$(echo $AZURE_CREDENTIALS | jq -r .clientId)"
-client_secret="$(echo $AZURE_CREDENTIALS | jq -r .clientSecret)"
 subscription_id="$(echo $AZURE_CREDENTIALS | jq -r .subscriptionId)"
 tenant_id="$(echo $AZURE_CREDENTIALS | jq -r .tenantId)"
 
 cd ..
+deployment_token=$(\
+  az staticwebapp secrets list \
+    --name "${static_web_app_name}" \
+    --query "properties.apiKey" \
+    --output tsv \
+  )
 swa deploy \
   --output-location "dist/ng-lite-app" \
-  --app-name "${static_app_name}" \
+  --app-name "${static_web_app_name}" \
   --resource-group "${resource_group_name}" \
   --tenant-id "${tenant_id}" \
   --subscription-id "${subscription_id}" \
-  --client-id "${client_id}" \
-  --client-secret "${client_secret}" \
   --env "production" \
-  --no-use-keychain \
+  --deployment-token "${deployment_token}" \
   --verbose
 
 echo "Deployment complete for environment '${environment}'."

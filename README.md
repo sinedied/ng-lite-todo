@@ -15,3 +15,7 @@ This project works the same way as any Angular project, by using either the incl
 
 - `npm start`: run dev server at `http://localhost:4200/`
 - `npm run build`: build the project in the `dist/` directory.
+
+## API
+
+This project uses a REST API to store the todos. You can find the source code of the API [here](https://github.com/sinedied/azure-functions-todo-api).
